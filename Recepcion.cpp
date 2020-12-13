@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 
+
 struct fecha
 {
 	int dia, mes, anio;
@@ -45,14 +46,20 @@ struct turnos
 int dibujarMenu();
 bool iniciars(FILE *f);
 void regmascota(FILE *f);
-void regturnos(FILE *f);
+void regturnos(FILE *t, FILE *f, FILE *M);
 
 main()
 {
 	FILE *mascotas = fopen("mascotas.dat", "a+b");
 	FILE *turnos = fopen("turnos.dat", "a+b");
 	FILE *usuario = fopen("usuarios.dat", "rb");
-
+	FILE *veterinarios = fopen("veterinarios.dat", "rb");
+	if(veterinarios == NULL)
+	{
+		printf("Veterinarios.dat no ha sido creado.\n\n");
+		system("pause");
+		exit(1);
+	}
 	bool iniciado = false;
 	
 	int opc;
@@ -66,21 +73,21 @@ main()
 						{
 							regmascota(mascotas);
 					 	}
-						 else printf("\n¡Inicie sesion!\n");
+						 else printf("\nInicie sesion!\n");
 					 break;
 					 
 			case 3: if(iniciado == true)
 						{
-							
+							regturnos(turnos, veterinarios, mascotas);
 					 	}
-						 else printf("\n¡Inicie sesion!\n");	 
+						 else printf("\nInicie sesion!\n");	 
 					 break;
 					 
 			case 4: if(iniciado == true)
 						{
 							
 					 	}
-						 else printf("\n¡Inicie sesion!\n");
+						 else printf("\nInicie sesion!\n");
                     break;
 		}
 		system("pause");
@@ -180,7 +187,62 @@ void regmascota(FILE *f)
 	fwrite(&m, sizeof(mascota), 1, f);
 }
 
-void regturnos(FILE *f)
+void regturnos(FILE *t, FILE *f, FILE *M)
 {
-	
+	fclose(M);
+	M = fopen("mascotas.dat", "rb");
+	rewind(f);
+
+	turnos tur;
+	mascota m;
+	int matricula;
+	bool mat = false;
+	system("cls");
+	printf("Registro de Turnos\n\n\n");
+
+	printf("Matricula de veterinario: ");
+	scanf("%d", &tur.matvet);
+
+	fread(&matricula, sizeof(int), 1, f);
+	while(!feof(f))
+	{
+		if(tur.matvet == matricula)
+		{
+			mat = true;
+
+			printf("\n\nFecha\n\n");
+			printf("Dia: ");
+			scanf("%d", &tur.fec.dia);
+			printf("\nMes: ");
+			scanf("%d", &tur.fec.mes);
+			printf("\nAnio: ");
+			do{
+				scanf("%d", &tur.fec.anio);
+			} while (tur.fec.anio <= 1900 && tur.fec.anio >= 2020);
+
+			fread(&m, sizeof(mascota), 1, M);
+			while(!feof(M))
+			{
+				do{
+					printf("DNI del dueno: ");
+					scanf("%d", &tur.DNId);
+				}while(tur.DNId != m.DNIdueno);
+
+				fread(&m, sizeof(mascota), 1, M);
+			}
+
+			printf("\nDetalle de atencion:\n-");
+			_flushall();
+			gets(tur.detAten);
+		}
+
+		fread(&matricula, sizeof(int), 1, f);
+	}
+
+
+	if(mat == true) fwrite(&tur, sizeof(turnos), 1, t);
+	else printf("\nMatricula no encontrada\n\n");
+
+	fclose(M);
+	M = fopen("mascotas.dat", "a+b");
 }

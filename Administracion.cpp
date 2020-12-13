@@ -76,7 +76,7 @@ void regusuario(){
 
 		do
 		{	system("cls");
-			printf("Condiciones:\n-Entre 6 y 10 caracteres\n-Letras, numeros, simbolos(+,-,/,*,?,¿,!,¡)\n-Comenzar con letra minuscula\n-Tener al menos 2 letras mayusculas\n-Tener como maximo 3 digitos\n");
+			printf("Condiciones:\n-Entre 6 y 10 caracteres\n-Letras, numeros, simbolos(+,-,/,*,?,ï¿½,!,ï¿½)\n-Comenzar con letra minuscula\n-Tener al menos 2 letras mayusculas\n-Tener como maximo 3 digitos\n");
 			printf("\nNombre de usuario: ");
 			_flushall();	
 			gets(us.Ausuario);
@@ -113,7 +113,7 @@ void regusuario(){
 		_flushall();
 		
 		do{	
-		printf("\nContraseña: ");
+		printf("\nContrasena: ");
 		gets(contra);
 		lon1 = strlen(contra);
             strcpy(auxc,contra);
@@ -267,7 +267,7 @@ void regveterinario(){
 		_flushall();
 		
 		do{	
-		printf("\nContraseña: ");
+		printf("\nContrasena: ");
 		gets(contra);
 		lon1 = strlen(contra);
             strcpy(auxc,contra);

@@ -73,23 +73,24 @@ main()
 						{
 							regmascota(mascotas);
 					 	}
-						 else printf("\nPrimerio debe Iniciar sesion!\n");
+						 else printf("\nPrimerio debe Iniciar sesion!\n\n");
 					 break;
 					 
 			case 3: if(iniciado == true)
 						{
 							regturnos(turnos, veterinarios, mascotas);
 					 	}
-						 else printf("\nPrimerio debe Iniciar sesion!\n");	 
+						 else printf("\nPrimerio debe Iniciar sesion!\n\n");	 
 					 break;
 					 
 			case 4: if(iniciado == true)
 						{
 							
 					 	}
-						 else printf("\nPrimerio debe Iniciar sesion!\n");
+						 else printf("\nPrimerio debe Iniciar sesion!\n\n");
                     break;
 		}
+		printf("\n");
 		system("pause");
 	}while(opc != 5);
 	
@@ -177,7 +178,7 @@ void regmascota(FILE *f)
 	
 	m.edad = 2020 - m.fec.anio;
 
-	printf("\n-> Peso: ");
+	printf("\n-> Peso(Kg): ");
 	scanf("%f", &m.peso);
 
 	printf("\n-> Telefono: ");

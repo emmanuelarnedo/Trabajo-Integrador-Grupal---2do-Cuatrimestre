@@ -58,7 +58,7 @@ main(){
 
 int dibujarMenu(){
 	system("cls");
-	printf("\n********************** V E N T A S **********************\n");
+	printf("\n********************** Modulo Administracion **********************\n");
 	printf("*\t 1) Registrar Veterinario                       *\n");
 	printf("*\t 2) Registrar Usuario Asistente o Adiminstrador *\n");	
 	printf("*\t 3) Atenciones por Veterinarios                 *\n");
@@ -133,7 +133,7 @@ void regusuario(bool &admin){
 		bool ecar=false, econs=false, error=false, eletconsec=false;
 		
 		system("cls");
-		printf("\t\t\tCONDICIONES PARA CONTRASEÑA");
+		printf("\t\t\tCONDICIONES PARA CONTRASENA");
 		printf("\n\n-> Contener al menos una letra mayuscula, una minuscula y un numero\n\n-> No contener ningun caracter de puntuacion, ni acentos, ni espacios\n\n-> Solo contener caracteres alfanumericos\n\n-> Tener entre 6 y 32 caracteres\n\n-> No tener mas de 3 caracteres consecutivos\n\n-> No tener 2 caracteres consecutivos que refieran a letras alfabeticamente consecutivas (ascendentemente)\n");
 		_flushall();
 		
@@ -291,7 +291,7 @@ void regveterinario(){
 		bool ecar=false, econs=false, error=false, eletconsec=false;
 		
 		system("cls");
-		printf("\t\t\tCONDICIONES PARA CONTRASEÑA");
+		printf("\t\t\tCONDICIONES PARA CONTRASENA");
 		printf("\n\n-> Contener al menos una letra mayuscula, una minuscula y un numero\n\n-> No contener ningun caracter de puntuacion, ni acentos, ni espacios\n\n-> Solo contener caracteres alfanumericos\n\n-> Tener entre 6 y 32 caracteres\n\n-> No tener mas de 3 caracteres consecutivos\n\n-> No tener 2 caracteres consecutivos que refieran a letras alfabeticamente consecutivas (ascendentemente)\n");
 		_flushall();
 		
@@ -463,3 +463,4 @@ bool checklogin()
 	return login;	
 	fclose(usuario);
 }
+

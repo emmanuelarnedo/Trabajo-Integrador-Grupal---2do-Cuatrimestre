@@ -24,6 +24,7 @@ void regveterinario();
 bool checklogin();
 
 main(){
+	system("COLOR 3F");
 	bool login = false;
 	bool admin = false;
 	int opc;
@@ -33,7 +34,7 @@ main(){
 			case 1:	system("cls");
 					login = checklogin();
 				 	 if(login == true) regveterinario();
-				 	 else printf("Loguearse es requerido para esta accion");
+				 	 else printf("\nLoguearse es requerido para esta accion!\n\n");
 					 break;
 					 
 			case 2:	if(admin == true)
@@ -57,14 +58,14 @@ main(){
 
 int dibujarMenu(){
 	system("cls");
-	printf("********VENTAS********\n");
-	printf("\t 1) Registrar Veterinario\n");
-	printf("\t 2) Registrar Usuario Asistente o Adiminstrador\n");	
-	printf("\t 3) Atenciones por Veterinarios\n");
-	printf("\t 4) Ranking de Veterinarios por Atenciones\n\n");
-	printf("\t 5) Cerrar la aplicacion\n");
-	printf("******************\n");
-	printf("Ingrese la opcion deseada: ");
+	printf("\n********************** V E N T A S **********************\n");
+	printf("*\t 1) Registrar Veterinario                       *\n");
+	printf("*\t 2) Registrar Usuario Asistente o Adiminstrador *\n");	
+	printf("*\t 3) Atenciones por Veterinarios                 *\n");
+	printf("*\t 4) Ranking de Veterinarios por Atenciones      *\n");
+	printf("*\t 5) Cerrar la aplicacion                        *\n");
+	printf("*********************************************************\n");
+	printf("\nIngrese la opcion deseada -> ");
 	int opc;
 	scanf("%d", &opc);
 	return opc;
@@ -98,8 +99,9 @@ void regusuario(bool &admin){
 
 		do
 		{	system("cls");
-			printf("Condiciones:\n-Entre 6 y 10 caracteres\n-Letras, numeros, simbolos(+,-,/,*,?,ï¿½,!,ï¿½)\n-Comenzar con letra minuscula\n-Tener al menos 2 letras mayusculas\n-Tener como maximo 3 digitos\n");
-			printf("\nNombre de usuario: ");
+			printf("\t\t\tCONDICIONES:\n\n");
+			printf("-> Entre 6 y 10 caracteres\n\n-> Letras, numeros, simbolos (+,-,/,*,?,ï¿½,!,ï¿½)\n\n-> Comenzar con letra minuscula\n\n-> Tener al menos 2 letras mayusculas\n\n-> Tener como maximo 3 digitos\n");
+			printf("\n\nIngrese nombre de usuario ->  ");
 			_flushall();	
 			gets(us.Ausuario);
 			if(strlen(us.Ausuario)>= 6 && strlen(us.Ausuario) <= 10)
@@ -131,11 +133,12 @@ void regusuario(bool &admin){
 		bool ecar=false, econs=false, error=false, eletconsec=false;
 		
 		system("cls");
-		printf("Condiciones:\n-Contener al menos una letra mayuscula, una minuscula y un numero\n-No contener ningun caracter de puntuacion, ni acentos, ni espacios\n-Solo contener caracteres alfanumericos\n-Tener entre 6 y 32 caracteres\n-No tener mas de 3 caracteres consecutivos\n-No tener 2 caracteres consecutivos que refieran a letras alfabeticamente consecutivas(ascendentemente)\n");
+		printf("\t\t\tCONDICIONES PARA CONTRASEÑA");
+		printf("\n\n-> Contener al menos una letra mayuscula, una minuscula y un numero\n\n-> No contener ningun caracter de puntuacion, ni acentos, ni espacios\n\n-> Solo contener caracteres alfanumericos\n\n-> Tener entre 6 y 32 caracteres\n\n-> No tener mas de 3 caracteres consecutivos\n\n-> No tener 2 caracteres consecutivos que refieran a letras alfabeticamente consecutivas (ascendentemente)\n");
 		_flushall();
 		
 		do{	
-		printf("\nContrasena: ");
+		printf("\nIngrese su Contrasena: ");
 		gets(contra);
 		lon1 = strlen(contra);
             strcpy(auxc,contra);
@@ -288,11 +291,12 @@ void regveterinario(){
 		bool ecar=false, econs=false, error=false, eletconsec=false;
 		
 		system("cls");
-		printf("Condiciones:\n-Contener al menos una letra mayuscula, una minuscula y un numero\n-No contener ningun caracter de puntuacion, ni acentos, ni espacios\n-Solo contener caracteres alfanumericos\n-Tener entre 6 y 32 caracteres\n-No tener mas de 3 caracteres consecutivos\n-No tener 2 caracteres consecutivos que refieran a letras alfabeticamente consecutivas(ascendentemente)\n");
+		printf("\t\t\tCONDICIONES PARA CONTRASEÑA");
+		printf("\n\n-> Contener al menos una letra mayuscula, una minuscula y un numero\n\n-> No contener ningun caracter de puntuacion, ni acentos, ni espacios\n\n-> Solo contener caracteres alfanumericos\n\n-> Tener entre 6 y 32 caracteres\n\n-> No tener mas de 3 caracteres consecutivos\n\n-> No tener 2 caracteres consecutivos que refieran a letras alfabeticamente consecutivas (ascendentemente)\n");
 		_flushall();
 		
 		do{	
-		printf("\nContrasena: ");
+		printf("\nIngrese su contraseña Contrasena ->  ");
 		gets(contra);
 		lon1 = strlen(contra);
             strcpy(auxc,contra);

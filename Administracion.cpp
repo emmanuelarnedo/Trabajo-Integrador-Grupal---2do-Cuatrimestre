@@ -81,7 +81,7 @@ void regusuario(bool &admin){
 	system("cls");
 	if(admin == false)
 	{
-		printf("Crear administrador\n\n\n");
+		printf("*CREAR ADMINISTRADOR*\n\n\n");
 		us.modulo = 1;
 		admin = true;
 		system("pause");

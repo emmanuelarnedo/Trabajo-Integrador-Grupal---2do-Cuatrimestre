@@ -73,21 +73,21 @@ main()
 						{
 							regmascota(mascotas);
 					 	}
-						 else printf("\nInicie sesion!\n");
+						 else printf("\nPrimerio debe Iniciar sesion!\n");
 					 break;
 					 
 			case 3: if(iniciado == true)
 						{
 							regturnos(turnos, veterinarios, mascotas);
 					 	}
-						 else printf("\nInicie sesion!\n");	 
+						 else printf("\nPrimerio debe Iniciar sesion!\n");	 
 					 break;
 					 
 			case 4: if(iniciado == true)
 						{
 							
 					 	}
-						 else printf("\nInicie sesion!\n");
+						 else printf("\nPrimerio debe Iniciar sesion!\n");
                     break;
 		}
 		system("pause");
@@ -99,14 +99,14 @@ main()
 
 int dibujarMenu(){
 	system("cls");
-	printf("*********************Modulo del asistente*************************\n");
-	printf("\t 1) Iniciar Sesion\n");
-	printf("\t 2) Registrar Mascota\n");
-	printf("\t 3) Registrar Turno\n");
-	printf("\t 4) Listado de Atenciones por Veterinario y Fecha\n");
-    printf("\t 5) Cerrar la aplicacion\n");
-	printf("****************************************************\n");
-	printf("ingrese la opcion deseada: ");
+	printf("****************** Modulo de Asistente **********************\n");
+	printf("\t 1) Iniciar Sesion   \n");
+	printf("\t 2) Registrar Mascota							\n");
+	printf("\t 3) Registrar Turno								\n");
+	printf("\t 4) Listado de Atenciones por Veterinario y Fecha	\n");
+    printf("\t 5) Cerrar la aplicacion								\n");
+	printf("*************************************************************\n");
+	printf("\ningrese la opcion deseada -> ");
 	int opc;
 	scanf("%d", &opc);
 	return opc;
@@ -150,26 +150,26 @@ void regmascota(FILE *f)
 	system("cls");
 
 	printf("Registro de mascota\n\n\n");
-	printf("Apellido(dueno) y nombre(mascota): ");
+	printf("-> Apellido(dueno) y nombre(mascota): ");
 	_flushall();
 	gets(m.apynomM);
 
-	printf("\nDomicilio: ");
+	printf("\n-> Domicilio: ");
 	gets(m.domicilio);
 
-	printf("\nDNI(dueno): ");
+	printf("\n-> DNI(dueno): ");
 	scanf("%d", &m.DNIdueno);
 
-	printf("\nLocalidad: ");
+	printf("\n-> Localidad: ");
 	_flushall();
 	gets(m.localidad);
 
-	printf("\n\nFecha de nacimiento\n\n");
-	printf("Dia: ");
+	printf("\n\n* Fecha de nacimiento *\n\n");
+	printf("-> Dia: ");
 	scanf("%d", &m.fec.dia);
-	printf("\nMes: ");
+	printf("\n-> Mes: ");
 	scanf("%d", &m.fec.mes);
-	printf("\nAnio: ");
+	printf("\n-> Anio: ");
 	do
 	{
 		scanf("%d", &m.fec.anio);
@@ -177,10 +177,10 @@ void regmascota(FILE *f)
 	
 	m.edad = 2020 - m.fec.anio;
 
-	printf("\nPeso: ");
+	printf("\n-> Peso: ");
 	scanf("%f", &m.peso);
 
-	printf("\nTelefono: ");
+	printf("\n-> Telefono: ");
 	_flushall();
 	gets(m.telefono);
 
@@ -210,12 +210,12 @@ void regturnos(FILE *t, FILE *f, FILE *M)
 		{
 			mat = true;
 
-			printf("\n\nFecha\n\n");
-			printf("Dia: ");
+			printf("\n\n* Fecha *\n\n");
+			printf("-> Dia: ");
 			scanf("%d", &tur.fec.dia);
-			printf("\nMes: ");
+			printf("\n-> Mes: ");
 			scanf("%d", &tur.fec.mes);
-			printf("\nAnio: ");
+			printf("\n-> Anio: ");
 			do{
 				scanf("%d", &tur.fec.anio);
 			} while (tur.fec.anio <= 1900 && tur.fec.anio >= 2020);
@@ -224,14 +224,14 @@ void regturnos(FILE *t, FILE *f, FILE *M)
 			while(!feof(M))
 			{
 				do{
-					printf("DNI del dueno: ");
+					printf("\n-> DNI del dueno: ");
 					scanf("%d", &tur.DNId);
 				}while(tur.DNId != m.DNIdueno);
 
 				fread(&m, sizeof(mascota), 1, M);
 			}
 
-			printf("\nDetalle de atencion:\n-");
+			printf("\n-> Detalle de atencion:\n-");
 			_flushall();
 			gets(tur.detAten);
 		}

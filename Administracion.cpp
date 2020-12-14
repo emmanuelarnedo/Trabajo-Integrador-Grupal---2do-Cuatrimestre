@@ -5,7 +5,7 @@
 struct registrov
 {
 	char apynom[60];
-	int matricula; //4 digitos como maximo
+	int matricula;
 	int dni;
 	char cel[25];
 	char Acontra[10];
@@ -19,19 +19,30 @@ struct registro{
 };
 
 int dibujarMenu();
-void regusuario();
+void regusuario(bool &admin);
 void regveterinario();
+bool checklogin();
 
 main(){
+	bool login = false;
+	bool admin = false;
 	int opc;
 	do{
 		opc = dibujarMenu();
 		switch(opc){
-			case 1:	regveterinario();	 	 
+			case 1:	system("cls");
+					login = checklogin();
+				 	 if(login == true) regveterinario();
+				 	 else printf("Loguearse es requerido para esta accion");
 					 break;
 					 
-			case 2:	 regusuario();
-					 break;
+			case 2:	if(admin == true)
+						{
+							login = checklogin();
+							if(login == true) regusuario(admin);
+						}
+					else regusuario(admin);
+					break;
 					 
 			case 3:		 
 					 break;
@@ -59,18 +70,29 @@ int dibujarMenu(){
 	return opc;
 }
 
-void regusuario(){
+void regusuario(bool &admin){
 	FILE *usuario = fopen("usuarios.dat", "a+b");
 	system("cls");
 	registro us;
-	bool u = false, p = false;
+	bool u = false;
 	int mayus=0, digitos=0, opcion, x;
 
 	system("cls");
-	printf("Elija usuario a crear(1.Usuario, 2.Administrador): ");
-	scanf("%d", &opcion);
-	if(opcion == 1)	us.modulo = 0;
-	else		us.modulo = 1;	
+	if(admin == false)
+	{
+		printf("Crear administrador\n\n\n");
+		us.modulo = 1;
+		admin = true;
+		system("pause");
+	}
+	else
+	{
+		printf("Elija usuario a crear(1.Usuario, 2.Administrador): ");
+		scanf("%d", &opcion);
+		if(opcion == 1)	us.modulo = 0;
+		else us.modulo = 1;
+	}
+
 	
 	do{
 
@@ -251,8 +273,11 @@ void regveterinario(){
 	system("cls");
 	
 	do{
-		printf("Ingrese matricula(max. 4 digitos): ");
-		scanf("%d", &vet.matricula);
+		do{
+			printf("Ingrese matricula(max. 4 digitos): ");
+			scanf("%d", &vet.matricula);
+		}while(vet.matricula <= 999 && vet.matricula >= 9999);
+
 		
 		printf("Ingrese celular: ");
 		_flushall();
@@ -394,4 +419,43 @@ void regveterinario(){
 	
 
 	fclose(veterinario);
+}
+
+bool checklogin()
+{
+	registro check;
+	int valor, valor2;
+	char usu[10], pass[10];
+	bool login = false;
+	FILE *usuario = fopen("usuarios.dat", "rb");
+	if(usuario == NULL)
+	{
+		printf("\nusuarios. dat no ha sido creado\n");
+		system("pause");
+		exit(1);
+	}
+	
+	system("cls");
+	printf("Inicio de Sesion:\n\n");
+	printf("Ingrese nombre de usuario: ");
+	_flushall();
+	gets(usu);
+	
+	printf("\nIngrese contrasena: ");
+	gets(pass);
+	
+	fread(&check, sizeof(registro), 1, usuario);
+	while(!feof(usuario))
+	{
+		valor = strcmp(usu, check.Ausuario);
+		valor2 = strcmp(pass, check.Acontra);
+		if(valor == 0 && valor2 == 0)
+			{
+				login = true;
+			}
+	fread(&check, sizeof(registro), 1, usuario);
+	}
+	
+	return login;	
+	fclose(usuario);
 }

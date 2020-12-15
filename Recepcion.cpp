@@ -110,14 +110,14 @@ main()
 
 int dibujarMenu(){
 	system("cls");
-	printf("****************** Modulo Asistente **********************\n");
+	printf("****************** Modulo Asistente *************************\n");
 	printf("\t 1) Iniciar Sesion   \n");
 	printf("\t 2) Registrar Mascota							\n");
 	printf("\t 3) Registrar Turno								\n");
 	printf("\t 4) Listado de Atenciones por Veterinario y Fecha	\n");
     printf("\t 5) Cerrar la aplicacion								\n");
 	printf("*************************************************************\n");
-	printf("\ningrese la opcion deseada -> ");
+	printf("\n ingrese la opcion deseada -> ");
 	int opc;
 	scanf("%d", &opc);
 	return opc;
@@ -131,10 +131,10 @@ bool iniciars(FILE *f)
 	int valor, valor2;
 	system("cls");
 	
-	printf("Ingrese nombre de usuario: ");
+	printf("- Ingrese nombre de usuario: ");
 	_flushall();
 	gets(login.usuario);
-	printf("\nIngrese contrasena: ");
+	printf("\n- Ingrese contrasena: ");
 	gets(login.contra);
 	
     rewind(f);
@@ -146,7 +146,7 @@ bool iniciars(FILE *f)
         
         if(valor == 0 && valor2 == 0)
 		{
-			printf("\n\nSesion iniciada correctamente\n\n");
+			printf("\n\n -Sesion iniciada correctamente.- \n\n");
 			iniciado = true;
 		}
         fread(&us, sizeof(registro), 1, f);
@@ -160,7 +160,7 @@ void regmascota(FILE *f)
 	mascota m;
 	system("cls");
 
-	printf("Registro de mascota\n\n\n");
+	printf(" *Registro de mascota*\n\n\n");
 	printf("-> Apellido(dueno) y nombre(mascota): ");
 	_flushall();
 	gets(m.apynomM);
@@ -208,9 +208,9 @@ void regturnos(FILE *t, FILE *f, FILE *M)
 	mascota m;
 	bool mat = false;
 	system("cls");
-	printf("Registro de Turnos\n\n\n");
+	printf("* Registro de Turnos* \n\n\n");
 
-	printf("Matricula de veterinario: ");
+	printf("- Matricula de veterinario: ");
 	scanf("%d", &tur.matvet);
 
 	fread(&reg, sizeof(registrov), 1, f);

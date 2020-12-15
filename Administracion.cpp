@@ -25,7 +25,6 @@ void regveterinario();
 bool checklogin();
 
 main(){
-	system("COLOR 3F");
 	bool login = false;
 	bool admin = false;
 	int opc;
@@ -59,7 +58,7 @@ main(){
 
 int dibujarMenu(){
 	system("cls");
-	printf("\n********************** Modulo Administracion **********************\n");
+	printf("\n***************** Modulo Administracion *****************\n");
 	printf("*\t 1) Registrar Veterinario                       *\n");
 	printf("*\t 2) Registrar Usuario Asistente o Adiminstrador *\n");	
 	printf("*\t 3) Atenciones por Veterinarios                 *\n");
@@ -89,7 +88,8 @@ void regusuario(bool &admin){
 	}
 	else
 	{
-		printf("Elija usuario a crear(1.Usuario, 2.Administrador): ");
+		printf("- Elija usuario a crear(1.Usuario, 2.Administrador): ");
+		system("pause");
 		scanf("%d", &opcion);
 		if(opcion == 1)	us.modulo = 0;
 		else us.modulo = 1;
@@ -138,7 +138,7 @@ void regusuario(bool &admin){
 		_flushall();
 		
 		do{	
-		printf("\nIngrese su Contrasena: ");
+		printf("\n- Ingrese su Contrasena: ");
 		gets(contra);
 		lon1 = strlen(contra);
             strcpy(auxc,contra);
@@ -250,12 +250,12 @@ void regusuario(bool &admin){
         if (error==false)
         {       
             strcpy(us.Acontra, contra);
-            printf("\nIngrese el apellido y nombre: ");        
+            printf("\n- Ingrese el apellido y nombre: ");        
             _flushall();
             gets(us.apynom);
 			fwrite(&us, sizeof(registro), 1, usuario);
             do{
-                printf("\nDesea agregar otro usuario? (SI:1 , NO:0): ");
+                printf("\n- Desea agregar otro usuario? (SI:1 , NO:0): ");
                 scanf("%d" ,&x);
             }while (x!=0 && x!=1);
         }
@@ -276,12 +276,12 @@ void regveterinario(){
 	
 	do{
 		do{
-			printf("Ingrese matricula(max. 4 digitos): ");
+			printf("-> Ingrese matricula(max. 4 digitos): ");
 			scanf("%d", &vet.matricula);
 		}while(vet.matricula > 9999);
 
 		
-		printf("Ingrese celular: ");
+		printf("-> Ingrese celular: ");
 		_flushall();
 		gets(vet.cel);
 		
@@ -407,12 +407,12 @@ void regveterinario(){
         if (error==false)
         {       
             strcpy(vet.Acontra, contra);
-            printf("\nIngrese el apellido y nombre: ");        
+            printf("\n- Ingrese el apellido y nombre: ");        
             _flushall();
             gets(vet.apynom);
 			fwrite(&vet, sizeof(registrov), 1, veterinario);
             do{
-                printf("\nDesea agregar otro veterinario? (SI:1 , NO:0): ");
+                printf("\n- Desea agregar otro veterinario? (SI:1 , NO:0): ");
                 scanf("%d" ,&x);
             }while (x!=0 && x!=1);
         }
@@ -439,12 +439,12 @@ bool checklogin()
 	}
 	
 	system("cls");
-	printf("Inicio de Sesion:\n\n");
-	printf("Ingrese nombre de usuario: ");
+	printf("* Inicio de Sesion:* \n\n");
+	printf("- Ingrese nombre de usuario: ");
 	_flushall();
 	gets(usu);
 	
-	printf("\nIngrese contrasena: ");
+	printf("\n- Ingrese contrasena: ");
 	gets(pass);
 	
 	fread(&check, sizeof(registro), 1, usuario);

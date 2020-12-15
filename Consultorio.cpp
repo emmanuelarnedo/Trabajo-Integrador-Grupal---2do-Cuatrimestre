@@ -99,12 +99,12 @@ main()
 
 int dibujarMenu(){
 	system("cls");
-	printf("****************** Modulo Consultorio **********************\n");
-	printf("\t 1) Iniciar Sesion   \n");
-	printf("\t 2) Visualizar lista de espera de turnos						\n");
-	printf("\t 3) Registrar Evolucion de la mascota							\n\n");
-    printf("\t 4) Cerrar la aplicacion								\n");
-	printf("*************************************************************\n");
+	printf("******************* Modulo Consultorio ***********************\n");
+	printf("*\t 1) Iniciar Sesion										 \n");
+	printf("*\t 2) Visualizar lista de espera de turnos 				\n");
+	printf("*\t 3) Registrar Evolucion de la mascota					\n");
+    printf("*\t 4) Cerrar la aplicacion  								\n");
+	printf("**************************************************************\n");
 	printf("\nIngrese la opcion deseada -> ");
 	int opc;
 	scanf("%d", &opc);
@@ -121,12 +121,12 @@ bool iniciarse(FILE *f, int &matvet)
 	
 	do
 	{
-		printf("Ingrese numero de matricula: ");
+		printf("- Ingrese numero de matricula: ");
 		scanf("%d", &log.Matricula);
 	} while (log.Matricula <= 999 || log.Matricula >= 9999);
 	matvet = log.Matricula;
 
-	printf("\nIngrese contrasena: ");
+	printf("\n- Ingrese contrasena: ");
 	_flushall();
 	gets(log.contra);
 	
@@ -139,7 +139,7 @@ bool iniciarse(FILE *f, int &matvet)
 		{
 			if(valor == 0)
 			{
-				printf("\n\nSesion iniciada correctamente\n\n");
+				printf("\n\n -Sesion iniciada correctamente-\n\n");
 				iniciado = true;
 			}
 
@@ -187,7 +187,7 @@ bool evolucion(FILE *f)
 	int dni;
 
 
-	printf("Ingrese DNI: ");
+	printf("Ingrese DNI -> ");
 	scanf("%d",&dni);
 	system("cls");
 
@@ -197,7 +197,7 @@ bool evolucion(FILE *f)
 		if(dni == tur.DNId)
 		{
 			borrar = true;
-			printf("Detalle de atencion:\n-");
+			printf("\n- Detalle de atencion:\n-");
 			_flushall();
 			gets(tur.detAten);
 
@@ -207,10 +207,10 @@ bool evolucion(FILE *f)
 	}
 	if(borrar == true)
 	{
-		printf("\n\nEvolucion registrada\n\n");
+		printf("\n\n -Evolucion registrada-\n\n");
 		fwrite(&tur, sizeof(turnos), 1, f);
 	}
-	else printf("\n\nEvolucion no registrada\n\n");
+	else printf("\n\n -Evolucion no registrada- \n\n");
 
 	return borrar;
 }

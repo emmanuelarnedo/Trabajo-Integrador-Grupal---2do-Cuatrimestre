@@ -9,6 +9,7 @@ struct registrov
 	int dni;
 	char cel[25];
 	char Acontra[10];
+	int atendidos=0;
 };
 
 struct registro{
@@ -93,7 +94,6 @@ void regusuario(bool &admin){
 		if(opcion == 1)	us.modulo = 0;
 		else us.modulo = 1;
 	}
-
 	
 	do{
 
@@ -269,7 +269,6 @@ void regusuario(bool &admin){
 
 void regveterinario(){
 	FILE *veterinario = fopen("veterinarios.dat", "a+b");
-	system("cls");
 	registrov vet;
 	int mayus=0, digitos=0, x;
 
@@ -279,7 +278,7 @@ void regveterinario(){
 		do{
 			printf("Ingrese matricula(max. 4 digitos): ");
 			scanf("%d", &vet.matricula);
-		}while(vet.matricula <= 999 && vet.matricula >= 9999);
+		}while(vet.matricula > 9999);
 
 		
 		printf("Ingrese celular: ");
@@ -296,7 +295,7 @@ void regveterinario(){
 		_flushall();
 		
 		do{	
-		printf("\nIngrese su contraseña Contrasena ->  ");
+		printf("\nIngrese su contrasena ->  ");
 		gets(contra);
 		lon1 = strlen(contra);
             strcpy(auxc,contra);
@@ -411,7 +410,7 @@ void regveterinario(){
             printf("\nIngrese el apellido y nombre: ");        
             _flushall();
             gets(vet.apynom);
-			fwrite(&vet, sizeof(registro), 1, veterinario);
+			fwrite(&vet, sizeof(registrov), 1, veterinario);
             do{
                 printf("\nDesea agregar otro veterinario? (SI:1 , NO:0): ");
                 scanf("%d" ,&x);

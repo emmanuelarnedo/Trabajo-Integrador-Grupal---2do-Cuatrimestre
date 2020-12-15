@@ -16,6 +16,16 @@ struct registro
 	int modulo;
 };
 
+struct registrov
+{
+	char apynom[60];
+	int matricula;
+	int dni;
+	char cel[25];
+	char Acontra[10];
+	int atendidos=0;
+};
+
 struct usuario
 {
 	char usuario[10];
@@ -100,7 +110,7 @@ main()
 
 int dibujarMenu(){
 	system("cls");
-	printf("****************** Modulo de Asistente **********************\n");
+	printf("****************** Modulo Asistente **********************\n");
 	printf("\t 1) Iniciar Sesion   \n");
 	printf("\t 2) Registrar Mascota							\n");
 	printf("\t 3) Registrar Turno								\n");
@@ -193,10 +203,9 @@ void regturnos(FILE *t, FILE *f, FILE *M)
 	fclose(M);
 	M = fopen("mascotas.dat", "rb");
 	rewind(f);
-
+	registrov reg;
 	turnos tur;
 	mascota m;
-	int matricula;
 	bool mat = false;
 	system("cls");
 	printf("Registro de Turnos\n\n\n");
@@ -204,10 +213,10 @@ void regturnos(FILE *t, FILE *f, FILE *M)
 	printf("Matricula de veterinario: ");
 	scanf("%d", &tur.matvet);
 
-	fread(&matricula, sizeof(int), 1, f);
+	fread(&reg, sizeof(registrov), 1, f);
 	while(!feof(f))
 	{
-		if(tur.matvet == matricula)
+		if(tur.matvet == reg.matricula)
 		{
 			mat = true;
 
@@ -231,13 +240,9 @@ void regturnos(FILE *t, FILE *f, FILE *M)
 
 				fread(&m, sizeof(mascota), 1, M);
 			}
-
-			printf("\n-> Detalle de atencion:\n-");
-			_flushall();
-			gets(tur.detAten);
 		}
 
-		fread(&matricula, sizeof(int), 1, f);
+		fread(&reg, sizeof(registrov), 1, f);
 	}
 
 

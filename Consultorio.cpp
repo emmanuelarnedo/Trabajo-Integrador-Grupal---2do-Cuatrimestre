@@ -180,7 +180,9 @@ void lista(FILE *f)
 }
 
 bool evolucion(FILE *f)
-{
+{	
+	fclose(f);
+	f = fopen("turnos.dat", "r+b");
 	rewind(f);
 	system("cls");
 	turnos tur;
@@ -197,29 +199,30 @@ bool evolucion(FILE *f)
 	{
 		if(dni == tur.DNId)
 		{
-			borrar = true;
 			printf("- Detalle de atencion:\n\n-");
 			_flushall();
 			gets(tur.detAten);
-
+			borrar = true;
+			
+			fwrite(&tur, sizeof(turnos), 1, f);
 			fread(&tur, sizeof(turnos), 1, f);
 		}
 		else fread(&tur, sizeof(turnos), 1, f);
 	}
-	if(borrar == true)
-	{
-		printf("\n\n -Evolucion registrada-\n\n");
-		fwrite(&tur, sizeof(turnos), 1, f);
-	}
-	else printf("\n\n -Evolucion no registrada- \n\n");
+	if(borrar == true) printf("\n\n -Evolucion registrada-\n\n");
+		
 
+	else printf("\n\n -Evolucion no registrada- \n\n");
+	
+	fclose(f);
+	f = fopen("turnos.dat", "rb");
 	return borrar;
 }
 void incontador(FILE *f, int matvet)
-{
+{	fclose(f);
+	f = fopen("veterinarios.dat", "a+b");
 	rewind(f);
 	registrov reg;
-
 	fread(&reg, sizeof(registrov), 1, f);
 	while(!feof(f))
 	{
@@ -231,5 +234,5 @@ void incontador(FILE *f, int matvet)
 		}
 		fread(&reg, sizeof(registrov), 1, f);
 	}
+	fclose(f);
 }
-

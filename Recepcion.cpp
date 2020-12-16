@@ -283,16 +283,18 @@ void listatencion(FILE *t, FILE *M)
 	scanf("%d",&mes);
 	printf("\n-Anio: ");
 	scanf("%d",&anio);
-
+	
+	rewind(t);
 	fread(&tur, sizeof(turnos), 1, t);
 	while(!feof(t))
 	{
 		nada = strcmp(tur.detAten, "");
 
 		if(nada != 0)
-		{
+		{	printf("llegue");
 			if(matricula == tur.matvet && dia == tur.fec.dia && mes == tur.fec.mes && anio == tur.fec.anio)
 			{
+				
 				fread(&mas, sizeof(mascota), 1, M);
 				while(!feof(M))
 				{

@@ -23,7 +23,7 @@ struct registrov
 	int dni;
 	char cel[25];
 	char Acontra[10];
-	int atendidos=0;
+	int atendidos;
 };
 
 struct usuario
@@ -57,6 +57,7 @@ int dibujarMenu();
 bool iniciars(FILE *f);
 void regmascota(FILE *f);
 void regturnos(FILE *t, FILE *f, FILE *M);
+void listatencion(FILE *t, FILE *M);
 
 main()
 {
@@ -83,21 +84,21 @@ main()
 						{
 							regmascota(mascotas);
 					 	}
-						 else printf("\nPrimerio debe Iniciar sesion!\n\n");
+						 else printf("\nPrimero debe Iniciar sesion!\n\n");
 					 break;
 					 
 			case 3: if(iniciado == true)
 						{
 							regturnos(turnos, veterinarios, mascotas);
 					 	}
-						 else printf("\nPrimerio debe Iniciar sesion!\n\n");	 
+						 else printf("\nPrimero debe Iniciar sesion!\n\n");	 
 					 break;
 					 
 			case 4: if(iniciado == true)
 						{
-							
+							listatencion(turnos, mascotas);
 					 	}
-						 else printf("\nPrimerio debe Iniciar sesion!\n\n");
+						 else printf("\nPrimero debe Iniciar sesion!\n\n");
                     break;
 		}
 		printf("\n");
@@ -105,7 +106,9 @@ main()
 	}while(opc != 5);
 	
 	fclose(mascotas);
+	fclose(turnos);
 	fclose(usuario);
+	fclose(veterinarios);
 }
 
 int dibujarMenu(){
@@ -117,7 +120,7 @@ int dibujarMenu(){
 	printf("\t 4) Listado de Atenciones por Veterinario y Fecha	\n");
     printf("\t 5) Cerrar la aplicacion								\n");
 	printf("*************************************************************\n");
-	printf("\n ingrese la opcion deseada -> ");
+	printf("\nIngrese la opcion deseada -> ");
 	int opc;
 	scanf("%d", &opc);
 	return opc;
@@ -203,22 +206,24 @@ void regturnos(FILE *t, FILE *f, FILE *M)
 	fclose(M);
 	M = fopen("mascotas.dat", "rb");
 	rewind(f);
+	
 	registrov reg;
 	turnos tur;
 	mascota m;
 	bool mat = false;
 	system("cls");
+	
 	printf("* Registro de Turnos* \n\n\n");
 
-	printf("- Matricula de veterinario: ");
-	scanf("%d", &tur.matvet);
 
 	fread(&reg, sizeof(registrov), 1, f);
 	while(!feof(f))
 	{
+		printf("- Matricula de veterinario: ");
+		scanf("%d", &tur.matvet);
 		if(tur.matvet == reg.matricula)
 		{
-			mat = true;
+			
 
 			printf("\n\n* Fecha *\n\n");
 			printf("-> Dia: ");
@@ -237,9 +242,11 @@ void regturnos(FILE *t, FILE *f, FILE *M)
 					printf("\n-> DNI del dueno: ");
 					scanf("%d", &tur.DNId);
 				}while(tur.DNId != m.DNIdueno);
-
+				
 				fread(&m, sizeof(mascota), 1, M);
 			}
+			strcpy(tur.detAten, "");
+			mat = true;
 		}
 
 		fread(&reg, sizeof(registrov), 1, f);
@@ -250,5 +257,65 @@ void regturnos(FILE *t, FILE *f, FILE *M)
 	else printf("\nMatricula no encontrada\n\n");
 
 	fclose(M);
+	M = fopen("mascotas.dat", "a+b");
+}
+
+void listatencion(FILE *t, FILE *M)
+{
+	system("cls");
+	fclose(t);
+	t = fopen("turnos.dat", "rb");
+	fclose(M);
+	M = fopen("mascotas.dat", "rb");
+
+	mascota mas;
+	turnos tur;
+	int matricula, dia, mes, anio, nada;
+	bool confirm = false;
+
+	printf("Buscar informe de mascota\n\n");
+	printf("Matricula de veterinario: ");
+	scanf("%d",&matricula);
+	printf("\nFecha de atencion\n");
+	printf("\n-Dia: ");
+	scanf("%d",&dia);
+	printf("\n-Mes: ");
+	scanf("%d",&mes);
+	printf("\n-Anio: ");
+	scanf("%d",&anio);
+
+	fread(&tur, sizeof(turnos), 1, t);
+	while(!feof(t))
+	{
+		nada = strcmp(tur.detAten, "");
+
+		if(nada != 0)
+		{
+			if(matricula == tur.matvet && dia == tur.fec.dia && mes == tur.fec.mes && anio == tur.fec.anio)
+			{
+				fread(&mas, sizeof(mascota), 1, M);
+				while(!feof(M))
+				{
+					if(tur.DNId == mas.DNIdueno)
+					{
+						confirm = true;
+
+						system("cls");
+						printf("\n\nMascota: ");
+						puts(mas.apynomM);
+						printf("\n");
+						puts(tur.detAten);
+					}
+					fread(&mas, sizeof(mascota), 1, M);
+				}
+			}
+			fread(&tur, sizeof(turnos), 1, t);
+		}
+
+	}
+
+	fclose(t);
+	fclose(M);
+	t = fopen("turnos.dat", "a+b");
 	M = fopen("mascotas.dat", "a+b");
 }

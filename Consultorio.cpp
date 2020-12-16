@@ -20,7 +20,7 @@ struct registrov
 	int dni;
 	char cel[25];
 	char Acontra[10];
-	int atendidos=0;
+	int atendidos;
 };
 
 struct mascota
@@ -138,8 +138,9 @@ bool iniciarse(FILE *f, int &matvet)
         if(log.Matricula == veti.matricula)
 		{
 			if(valor == 0)
-			{
+			{	
 				printf("\n\n -Sesion iniciada correctamente-\n\n");
+				printf(" -Bienvenido/a %s!\n\n", veti.apynom);
 				iniciado = true;
 			}
 
@@ -158,7 +159,6 @@ void lista(FILE *f)
 	int c=0;
 	int nada;
 
-	
 
 	fread(&tur, sizeof(turnos), 1, f);
 	while(!feof(f))
@@ -166,12 +166,13 @@ void lista(FILE *f)
 		nada = strcmp(tur.detAten, "");
 
 		if(nada == 0)
-		{
-			printf("\n\n\nTurno %d\n\n", c+1);
+		{	printf("*Lista de espera de turnos*\n\n");
+			printf("--------------------------------\n");
+			printf("\n-Turno %d:\n\n", c+1);
 
-			printf("Matricula de Veterinario --> %d\n", tur.matvet);
-			printf("Fecha --> %d/%d/%d\n",tur.fec.dia, tur.fec.mes, tur.fec.anio);
-			printf("DNI(dueno) --> %d\n", tur.DNId);
+			printf("\n-Matricula del Veterinario --> %d\n", tur.matvet);
+			printf("\n-Fecha --> %d/%d/%d\n",tur.fec.dia, tur.fec.mes, tur.fec.anio);
+			printf("\n-DNI(dueno) --> %d\n", tur.DNId);
 			fread(&tur, sizeof(turnos), 1, f);
 		}
 		else fread(&tur, sizeof(turnos), 1, f);;
@@ -197,7 +198,7 @@ bool evolucion(FILE *f)
 		if(dni == tur.DNId)
 		{
 			borrar = true;
-			printf("\n- Detalle de atencion:\n-");
+			printf("- Detalle de atencion:\n\n-");
 			_flushall();
 			gets(tur.detAten);
 
@@ -226,7 +227,9 @@ void incontador(FILE *f, int matvet)
 		{
 			reg.atendidos++;
 			fwrite(&reg, sizeof(registrov), 1, f);
+
 		}
 		fread(&reg, sizeof(registrov), 1, f);
 	}
 }
+

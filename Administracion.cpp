@@ -9,7 +9,7 @@ struct registrov
 	int dni;
 	char cel[25];
 	char Acontra[10];
-	int atendidos=0;
+	int atendidos;
 };
 
 struct registro{
@@ -33,8 +33,13 @@ main(){
 		switch(opc){
 			case 1:	system("cls");
 					login = checklogin();
-				 	 if(login == true) regveterinario();
-				 	 else printf("\nLoguearse es requerido para esta accion!\n\n");
+				 	 if(login == true) {
+						printf("\n -Sesion iniciada correctamente- \n\n");
+						system("pause");
+						system("cls");
+						regveterinario();
+				 		}
+					  else printf("\nLoguearse es requerido para esta accion!\n\n");
 					 break;
 					 
 			case 2:	if(admin == true)
@@ -51,6 +56,7 @@ main(){
 			case 4:
                     break;
 		}
+		printf("\n");
 		system("pause");
 	}while(opc != 5);
 	exit(1);
@@ -281,7 +287,7 @@ void regveterinario(){
 		}while(vet.matricula > 9999);
 
 		
-		printf("-> Ingrese celular: ");
+		printf("\n-> Ingrese celular: ");
 		_flushall();
 		gets(vet.cel);
 		
@@ -420,7 +426,7 @@ void regveterinario(){
     	printf("\n");
     }while (x==1);
 	
-
+	
 	fclose(veterinario);
 }
 
@@ -433,7 +439,7 @@ bool checklogin()
 	FILE *usuario = fopen("usuarios.dat", "rb");
 	if(usuario == NULL)
 	{
-		printf("\nusuarios. dat no ha sido creado\n");
+		printf("\nusuarios. dat no ha sido creado\n\n");
 		system("pause");
 		exit(1);
 	}

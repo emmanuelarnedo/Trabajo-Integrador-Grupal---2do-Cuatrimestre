@@ -291,7 +291,7 @@ void listatencion(FILE *t, FILE *M)
 		nada = strcmp(tur.detAten, "");
 
 		if(nada != 0)
-		{	printf("llegue");
+		{	
 			if(matricula == tur.matvet && dia == tur.fec.dia && mes == tur.fec.mes && anio == tur.fec.anio)
 			{
 				
@@ -303,7 +303,9 @@ void listatencion(FILE *t, FILE *M)
 						confirm = true;
 
 						system("cls");
-						printf("\n\nMascota: ");
+						printf("Listado de mascotas atendidas: \n\n");
+						printf("------------------------------\n");
+						printf("\nMascota: ");
 						puts(mas.apynomM);
 						printf("\n");
 						puts(tur.detAten);

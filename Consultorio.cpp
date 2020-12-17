@@ -184,7 +184,6 @@ bool evolucion(FILE *f)
 	fclose(f);
 	f = fopen("turnos.dat", "r+b");
 	FILE *auxtur = fopen("auxiliar.dat", "a+b");
-	rewind(f);
 	system("cls");
 	turnos tur;
 	bool borrar = false;

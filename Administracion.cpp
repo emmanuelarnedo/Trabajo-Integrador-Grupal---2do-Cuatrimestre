@@ -52,10 +52,26 @@ main(){
 					else regusuario(admin);
 					break;
 					 
-			case 3:	atenvet();
+			case 3:	system("cls");
+					login = checklogin();
+				 		if(login == true) {
+							printf("\n -Sesion iniciada correctamente- \n\n");
+							system("pause");
+							system("cls");
+							atenvet();
+				 		}
+						else printf("\nLoguearse es requerido para esta accion!\n\n");
 					break;
 					 
-			case 4:	ranking();
+			case 4:	system("cls");
+					login = checklogin();
+				 		if(login == true) {
+							printf("\n -Sesion iniciada correctamente- \n\n");
+							system("pause");
+							system("cls");
+							ranking();
+				 		}
+						else printf("\nLoguearse es requerido para esta accion!\n\n");
                     break;
 		}
 		printf("\n");

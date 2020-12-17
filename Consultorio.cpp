@@ -83,7 +83,7 @@ main()
 						{
 							borrar = evolucion(turnos);
 					 	}
-						 else printf("\nPrimerio debe Iniciar sesion!\n");	 
+						 else printf("\nPrimerio debe Iniciar sesion!\n");
 						 if(borrar == true) incontador(veterinarios, matvet);
 					 break;
 					 
@@ -123,7 +123,7 @@ bool iniciarse(FILE *f, int &matvet)
 	{
 		printf("- Ingrese numero de matricula: ");
 		scanf("%d", &log.Matricula);
-	} while (log.Matricula <= 999 || log.Matricula >= 9999);
+	} while (log.Matricula >= 9999);
 	matvet = log.Matricula;
 
 	printf("\n- Ingrese contrasena: ");
@@ -183,31 +183,43 @@ bool evolucion(FILE *f)
 {	
 	fclose(f);
 	f = fopen("turnos.dat", "r+b");
+	FILE *auxtur = fopen("auxiliar.dat", "a+b");
 	rewind(f);
 	system("cls");
 	turnos tur;
 	bool borrar = false;
-	int dni;
+	int dni, dia, mes, anio;
 
 
 	printf("Ingrese DNI -> ");
 	scanf("%d",&dni);
+	printf("\nFecha de atencion\n");
+	printf("\n-Dia: ");
+	scanf("%d",&dia);
+	printf("\n-Mes: ");
+	scanf("%d",&mes);
+	printf("\n-Anio: ");
+	scanf("%d",&anio);
+	
 	system("cls");
 
 	fread(&tur, sizeof(turnos), 1, f);
-	while(!feof(f))
+	while(!feof(f) && !borrar)
 	{
-		if(dni == tur.DNId)
+		if(dni == tur.DNId && dia == tur.fec.dia && mes == tur.fec.mes && anio == tur.fec.anio)
 		{
 			printf("- Detalle de atencion:\n\n-");
 			_flushall();
 			gets(tur.detAten);
 			borrar = true;
 			
-			fwrite(&tur, sizeof(turnos), 1, f);
-			fread(&tur, sizeof(turnos), 1, f);
+			fwrite(&tur, sizeof(turnos), 1, auxtur);
 		}
-		else fread(&tur, sizeof(turnos), 1, f);
+		else
+		{
+			fwrite(&tur, sizeof(turnos), 1, auxtur);
+		} 
+		fread(&tur, sizeof(turnos), 1, f);
 	}
 	if(borrar == true) printf("\n\n -Evolucion registrada-\n\n");
 		
@@ -215,13 +227,18 @@ bool evolucion(FILE *f)
 	else printf("\n\n -Evolucion no registrada- \n\n");
 	
 	fclose(f);
+	fclose(auxtur);
+	
+	remove("turnos.dat");
+	rename("auxiliar.dat","turnos.dat");
 	f = fopen("turnos.dat", "rb");
 	return borrar;
 }
 void incontador(FILE *f, int matvet)
 {	fclose(f);
-	f = fopen("veterinarios.dat", "a+b");
-	rewind(f);
+	f = fopen("veterinarios.dat", "r+b");
+	FILE *aux = fopen("auxiliar.dat", "a+b");
+	
 	registrov reg;
 	fread(&reg, sizeof(registrov), 1, f);
 	while(!feof(f))
@@ -229,10 +246,19 @@ void incontador(FILE *f, int matvet)
 		if(matvet == reg.matricula)
 		{
 			reg.atendidos++;
-			fwrite(&reg, sizeof(registrov), 1, f);
 
+			fwrite(&reg, sizeof(registrov), 1, aux);
+		}
+		else
+		{
+			fwrite(&reg, sizeof(registrov), 1, aux);
 		}
 		fread(&reg, sizeof(registrov), 1, f);
 	}
 	fclose(f);
+	fclose(aux);
+	
+	remove("veterinarios.dat");
+	rename("auxiliar.dat","veterinarios.dat");
+	fopen("veterinarios.dat", "rb");
 }

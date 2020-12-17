@@ -23,6 +23,8 @@ int dibujarMenu();
 void regusuario(bool &admin);
 void regveterinario();
 bool checklogin();
+void atenvet();
+void ranking();
 
 main(){
 	bool login = false;
@@ -50,10 +52,10 @@ main(){
 					else regusuario(admin);
 					break;
 					 
-			case 3:		 
-					 break;
+			case 3:	atenvet();
+					break;
 					 
-			case 4:
+			case 4:	ranking();
                     break;
 		}
 		printf("\n");
@@ -412,6 +414,7 @@ void regveterinario(){
 
         if (error==false)
         {       
+        	vet.atendidos = 0;
             strcpy(vet.Acontra, contra);
             printf("\n- Ingrese el apellido y nombre: ");        
             _flushall();
@@ -469,3 +472,63 @@ bool checklogin()
 	fclose(usuario);
 }
 
+void atenvet()
+{
+	FILE *f = fopen("veterinarios.dat", "rb");
+	registrov reg;
+	system("cls");
+	
+	printf("Atenciones por veterinario\n\n");
+	
+	fread(&reg, sizeof(registrov), 1, f);
+	while(!feof(f))
+	{
+		printf("Matricula: %d\n", reg.matricula);
+		printf("Veterinario: %s\n", reg.apynom);
+		printf("Cantidad de atenciones: %d\n\n\n", reg.atendidos);
+
+		fread(&reg, sizeof(registrov), 1, f);
+	}
+	fclose(f);
+}
+
+void ranking()
+{
+	FILE *f = fopen("veterinarios.dat", "rb");
+	registrov reg, vector[100], aux;
+	int i=0;
+	system("cls");
+	
+	fread(&reg, sizeof(registrov), 1, f);
+	while(!feof(f))
+	{
+		vector[i]=reg;
+		i++;	
+		fread(&reg, sizeof(registrov), 1, f);
+	}
+	
+	int n=i;
+	bool band;
+	
+	do{
+		band = false;
+		for(i = 0; i < n-1; i++)
+		{
+			if(vector[i].atendidos < vector[i+1].atendidos)
+			{
+				aux = vector[i];
+				vector[i] = vector[i+1];
+				vector[i+1] = aux;
+				band = true;
+			}
+		}
+	}while(band == true);
+	
+	printf("Ranking de veterinarios\n\n");
+	for(i=0; i<n; i++)
+	{
+		printf("Veterinario: %s - Atendidos: [%d]\n\n", vector[i].apynom, vector[i].atendidos);
+	}
+
+	fclose(f);
+}

@@ -116,7 +116,7 @@ int dibujarMenu(){
 	printf("****************** Modulo Asistente *************************\n");
 	printf("\t 1) Iniciar Sesion   \n");
 	printf("\t 2) Registrar Mascota							\n");
-	printf("\t 3) Registrar Turno								\n");
+	printf("\t 3) Registrar Turno							\n");
 	printf("\t 4) Listado de Atenciones por Veterinario y Fecha	\n");
     printf("\t 5) Cerrar la aplicacion								\n");
 	printf("*************************************************************\n");
@@ -210,21 +210,18 @@ void regturnos(FILE *t, FILE *f, FILE *M)
 	registrov reg;
 	turnos tur;
 	mascota m;
-	bool mat = false;
+	bool exito = false;
 	system("cls");
 	
 	printf("* Registro de Turnos* \n\n\n");
-
-
+	printf("- Matricula de veterinario: ");
+	scanf("%d", &tur.matvet);
+	
 	fread(&reg, sizeof(registrov), 1, f);
 	while(!feof(f))
 	{
-		printf("- Matricula de veterinario: ");
-		scanf("%d", &tur.matvet);
 		if(tur.matvet == reg.matricula)
 		{
-			
-
 			printf("\n\n* Fecha *\n\n");
 			printf("-> Dia: ");
 			scanf("%d", &tur.fec.dia);
@@ -236,25 +233,28 @@ void regturnos(FILE *t, FILE *f, FILE *M)
 			} while (tur.fec.anio <= 1900 && tur.fec.anio >= 2020);
 
 			fread(&m, sizeof(mascota), 1, M);
+			printf("\n-> DNI del dueno: ");
+			scanf("%d", &tur.DNId);
 			while(!feof(M))
 			{
-				do{
-					printf("\n-> DNI del dueno: ");
-					scanf("%d", &tur.DNId);
-				}while(tur.DNId != m.DNIdueno);
-				
+				if(tur.DNId == m.DNIdueno)
+				{
+					strcpy(tur.detAten, "");
+					exito = true;	
+				}
 				fread(&m, sizeof(mascota), 1, M);
 			}
-			strcpy(tur.detAten, "");
-			mat = true;
 		}
-
 		fread(&reg, sizeof(registrov), 1, f);
 	}
 
 
-	if(mat == true) fwrite(&tur, sizeof(turnos), 1, t);
-	else printf("\nMatricula no encontrada\n\n");
+	if(exito == true)
+	{
+		printf("\nTurno registrado con exito\n\n");
+		fwrite(&tur, sizeof(turnos), 1, t);
+	}
+	else printf("\nTurno no registrado\n\n");
 
 	fclose(M);
 	M = fopen("mascotas.dat", "a+b");
@@ -311,9 +311,8 @@ void listatencion(FILE *t, FILE *M)
 					fread(&mas, sizeof(mascota), 1, M);
 				}
 			}
-			fread(&tur, sizeof(turnos), 1, t);
 		}
-
+		fread(&tur, sizeof(turnos), 1, t);
 	}
 
 	fclose(t);
